@@ -1,4 +1,4 @@
-package com.games.blackjack;
+package com.games.TwentyFourtyEight;
 
 enum Card {
     ACE_SPADES,

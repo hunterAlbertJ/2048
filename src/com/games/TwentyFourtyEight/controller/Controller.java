@@ -1,6 +1,6 @@
-package com.games.blackjack.controller;
+package com.games.TwentyFourtyEight.controller;
 
-import com.games.blackjack.Dealer;
+import com.games.TwentyFourtyEight.Dealer;
 
 import java.util.Scanner;
 
