@@ -1,8 +1,8 @@
-# blackjack
-Practice project based on blackjack
+# 2048
+Project based on the game 2048
 Project Team 
-* Owen (owner) *insert power trip here*
-* Alice (collaborator)
-* Bob (collaborator)
+* James
+* Michael
+* Larry 
 
-Copyright team rock
+Copyright team 2048M8s
