@@ -1,12 +1,11 @@
 package com.games.TwentyFourtyEight.controller;
 
-import com.games.TwentyFourtyEight.Dealer;
-
 import java.util.Scanner;
 
 class Controller {
+    //Takes user input in the form of arrow key presses
     private Scanner scanner = new Scanner(System.in);
-    private Dealer dealer;
+    //gets board states at time of input
 
     public void execute(){
 
