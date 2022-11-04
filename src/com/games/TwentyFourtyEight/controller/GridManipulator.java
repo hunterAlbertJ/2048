@@ -21,6 +21,7 @@ class GridManipulator {
     //need a counter to see how many squares moved
     //takes in board object that is a hashmap of integer position and value
     //board like object
+    //comment here
 
   public void initializeBoard(){
        HashMap<Integer, Integer> currentBoard = new HashMap<>();
