@@ -4,7 +4,7 @@ import com.games.TwentyFourtyEight.controller.GridManipulator;
 
 import java.util.Scanner;
 
-class GridManipulatorTestClient {
+public class GridManipulatorTestClient {
 
 
     public static void main(String[] args) {
@@ -13,33 +13,40 @@ class GridManipulatorTestClient {
         grid.newBoard();
         boolean gameOver = false;
         while(!gameOver){
+            if(grid.isGameValid() == false){
+                gameOver = true;
+            }
             System.out.println("WASD");
             String input = scanner.nextLine().trim().toUpperCase();
             if(input.matches("W|A|S|D")){
                 switch(input){
                     case "W":
-                        grid.upArrow();
+                        grid.upRemoved();
                         grid.printBoard();
                         break;
                     case "S":
 
-                        grid.downArrow();
+                        grid.downRemoved();
                         grid.printBoard();
                         break;
                     case "D":
 
-                        grid.rightArrow();
+                        grid.rightRemoved();
                         grid.printBoard();
                         break;
                     case "A":
 
-                        grid.leftArrow();
+                        grid.leftRemoved();
                         grid.printBoard();
                         break;
                 }
 
+            }else{
+                grid.printBoard();
+                System.out.println("Use WASD keys to move tiles");
             }
         }
+        System.out.println("NO MOVES REMAIN. GAME OVER");
 
     }
 }
