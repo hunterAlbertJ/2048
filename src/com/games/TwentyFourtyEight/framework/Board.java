@@ -50,6 +50,22 @@ public class Board {
 
     public void update(){
         // TODO check for buttons pressed
+
+        // check for win status
+        for(int row = 0; row < ROWS; row++){
+            for(int col = 0; col < COLS; col++){
+                Tile currentTile = board[row][col];
+
+                if(currentTile == null){
+                    continue;
+                }
+                currentTile.update();
+
+                if(currentTile.getValue() == 2048){
+                    winner = true;
+                }
+            }
+        }
     }
 
     public void render(Graphics2D g){
