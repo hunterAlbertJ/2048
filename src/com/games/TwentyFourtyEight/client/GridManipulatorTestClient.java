@@ -18,26 +18,29 @@ class GridManipulatorTestClient {
             if(input.matches("W|A|S|D")){
                 switch(input){
                     case "W":
-                        grid.upArrow();
+                        grid.upRemoved();
                         grid.printBoard();
                         break;
                     case "S":
 
-                        grid.downArrow();
+                        grid.downRemoved();
                         grid.printBoard();
                         break;
                     case "D":
 
-                        grid.rightArrow();
+                        grid.rightRemoved();
                         grid.printBoard();
                         break;
                     case "A":
 
-                        grid.leftArrow();
+                        grid.leftRemoved();
                         grid.printBoard();
                         break;
                 }
 
+            }else{
+                grid.printBoard();
+                System.out.println("WASD");
             }
         }
 
