@@ -23,18 +23,18 @@ public class GridManipulator {
     public HashMap<Integer, Integer> currentBoard = new HashMap<>();
     public void newBoard(){
         currentBoard.put(1,2);
-        currentBoard.put(2,0);
+        currentBoard.put(2,2);
         currentBoard.put(3,0);
         currentBoard.put(4,2);
         currentBoard.put(5,0);
         currentBoard.put(6,0);
         currentBoard.put(7,0);
         currentBoard.put(8,0);
-        currentBoard.put(9,2);
+        currentBoard.put(9,0);
         currentBoard.put(10,0);
         currentBoard.put(11,0);
-        currentBoard.put(12,16);
-        currentBoard.put(13,4);
+        currentBoard.put(12,0);
+        currentBoard.put(13,0);
         currentBoard.put(14,0);
         currentBoard.put(15,0);
         currentBoard.put(16,0);
@@ -215,20 +215,21 @@ public class GridManipulator {
             int caseFlag;
             if(square.getKey().equals(4)){
                 System.out.println(square.getKey());
-                caseFlag = 1;
+                System.out.println("first if");
+                continue;
             }
             if(square.getKey().equals(8)){
                 System.out.println(square.getKey());
-                caseFlag = 1;
+                continue;
             }
             if(square.getKey().equals(12)){
                 System.out.println(square.getKey());
-                caseFlag = 1;
+                continue;
 
             }
             if(square.getKey().equals(16)){
                 System.out.println(square.getKey());
-                caseFlag = 1;
+                continue;
             }else {
                 caseFlag = 0;
             }
@@ -247,6 +248,7 @@ public class GridManipulator {
 
                     }
                     if(nextLevelValue == 0 && square.getValue() != 0){
+                        System.out.println("moving right");
                         setValueWithKnownKey(nextLevelKey, square.getValue());
                         setValueWithKnownKey(square.getKey(), 0);
                         rightArrow();
@@ -254,7 +256,61 @@ public class GridManipulator {
                     break;
 
                 case 1:
-                    continue;
+                    break;
+
+            }
+        }
+    }
+    public void leftArrow(){
+        HashMap<Integer, Integer> currentBoards = currentBoard;
+        for(Map.Entry<Integer,Integer> square : currentBoards.entrySet()) {
+            int currentLevelValue = getValueWithKnownKey(square.getKey());
+            boolean rightBorder = false;
+            int caseFlag;
+            if(square.getKey().equals(1)){
+                System.out.println(square.getKey());
+                System.out.println("first if");
+                continue;
+            }
+            if(square.getKey().equals(5)){
+                System.out.println(square.getKey());
+                continue;
+            }
+            if(square.getKey().equals(9)){
+                System.out.println(square.getKey());
+                continue;
+
+            }
+            if(square.getKey().equals(13)){
+                System.out.println(square.getKey());
+                continue;
+            }else {
+                caseFlag = 0;
+            }
+            switch (caseFlag) {
+                case 0:
+                    int nextLevelKey = square.getKey() -1;
+                    int nextLevelValue = getValueWithKnownKey(nextLevelKey);
+
+                    if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
+                        System.out.println("addition can happen here");
+                        setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
+                        setValueWithKnownKey(square.getKey(), 0);
+                        System.out.println();
+
+                        leftArrow();
+
+                    }
+                    if(nextLevelValue == 0 && square.getValue() != 0){
+                        System.out.println("moving right");
+                        setValueWithKnownKey(nextLevelKey, square.getValue());
+                        setValueWithKnownKey(square.getKey(), 0);
+                        leftArrow();
+                    }
+                    break;
+
+                case 1:
+                    break;
 
             }
         }

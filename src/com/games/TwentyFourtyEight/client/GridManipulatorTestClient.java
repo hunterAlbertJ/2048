@@ -31,6 +31,11 @@ class GridManipulatorTestClient {
                         grid.rightArrow();
                         grid.printBoard();
                         break;
+                    case "A":
+
+                        grid.leftArrow();
+                        grid.printBoard();
+                        break;
                 }
 
             }
