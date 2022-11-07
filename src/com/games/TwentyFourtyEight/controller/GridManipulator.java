@@ -5,6 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GridManipulator {
+    public boolean isGameValid() {
+        return gameValid;
+    }
+
+    public void setGameValid(boolean gameValid) {
+        this.gameValid = gameValid;
+    }
+
+    private boolean gameValid = true;
+    public int gameScore;
 
     //called by controller to run logic on passed in board position data
     //recursion algorithm
@@ -48,7 +58,6 @@ public class GridManipulator {
         for (Map.Entry<Integer, Integer> square : currentBoard.entrySet()) {
             double tempVar = square.getKey() / 4.0;
             String stringVar = String.valueOf(tempVar);
-//           System.out.println(stringVar);
             if (stringVar.matches("1.0|2.0|3.0|4.0")) {
                 System.out.print("|");
                 System.out.print(" ");
@@ -60,9 +69,7 @@ public class GridManipulator {
                 System.out.print("|");
                 System.out.println();
                 System.out.print("-------------------------");
-                System.out.println(
-
-                );
+                System.out.println();
 
             } else {
                 System.out.print("|");
@@ -72,11 +79,11 @@ public class GridManipulator {
                 } else {
                     System.out.print(String.format("%-4d",  square.getValue()));
                 }
-
-
             }
         }
+
         System.out.println();
+        System.out.println("Score: " + gameScore);
     }
 
     public void firstTwoTilesGenerator(){
@@ -96,7 +103,6 @@ public class GridManipulator {
         for (Map.Entry<Integer, Integer> square : currentBoard.entrySet()) {
             double tempVar = square.getKey() / 4.0;
             String stringVar = String.valueOf(tempVar);
-//           System.out.println(stringVar);
             if (stringVar.matches("1.0|2.0|3.0|4.0")) {
                 System.out.print("|");
                 System.out.print(" ");
@@ -108,6 +114,7 @@ public class GridManipulator {
                 System.out.print("|");
                 System.out.println();
                 System.out.print("-------------------------");
+
                 System.out.println(
 
                 );
@@ -124,6 +131,7 @@ public class GridManipulator {
 
             }
         }
+        System.out.println(gameScore + " gameScore");
         System.out.println();
     }
 
@@ -138,7 +146,8 @@ public class GridManipulator {
                     int nextLevelValue = getValueWithKnownKey(nextLevelKey);
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                        System.out.println("addition can happen here");
+                        //System.out.println("addition can happen here");
+                        gameScore += nextLevelValue * 2;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
                         System.out.println();
@@ -157,7 +166,8 @@ public class GridManipulator {
                     nextLevelValue = getValueWithKnownKey(nextLevelKey);
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                        System.out.println("addition can happen here with ");
+                       // System.out.println("addition can happen here with ");
+                        gameScore += nextLevelValue * 2;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
                         System.out.println();
@@ -174,7 +184,9 @@ public class GridManipulator {
                     nextLevelKey = square.getKey() + 4;
                     nextLevelValue = getValueWithKnownKey(nextLevelKey);
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                        System.out.println("addition can happen here");
+                       // System.out.println("addition can happen here");
+                        int doubleNext = nextLevelValue * 2;
+                        gameScore += doubleNext;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
                         System.out.println();
@@ -202,6 +214,8 @@ public class GridManipulator {
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
                         System.out.println("addition can happen here");
+                        int doubleNext = nextLevelValue * 2;
+                        gameScore += doubleNext;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
                         System.out.println();
@@ -221,7 +235,9 @@ public class GridManipulator {
                     nextLevelValue = getValueWithKnownKey(nextLevelKey);
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                        System.out.println("addition can happen here with ");
+                       // System.out.println("addition can happen here with ");
+                        int doubleNext = nextLevelValue * 2;
+                        gameScore += doubleNext;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
                         System.out.println();
@@ -238,7 +254,7 @@ public class GridManipulator {
                     nextLevelKey = square.getKey() - 4;
                     nextLevelValue = getValueWithKnownKey(nextLevelKey);
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                        System.out.println("addition can happen here");
+                        gameScore += nextLevelValue * 2;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
                         System.out.println();
@@ -283,6 +299,8 @@ public class GridManipulator {
                     int nextLevelValue = getValueWithKnownKey(nextLevelKey);
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
+                        int doubleNext = nextLevelValue * 2;
+                        gameScore += doubleNext;
 
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
@@ -292,6 +310,7 @@ public class GridManipulator {
 
                     }
                     if (nextLevelValue == 0 && square.getValue() != 0) {
+
 
                         setValueWithKnownKey(nextLevelKey, square.getValue());
                         setValueWithKnownKey(square.getKey(), 0);
@@ -347,7 +366,6 @@ public class GridManipulator {
             }
         }
         newTwoTile(zeros);
-        System.out.println(zeros);
     }
 
     public void leftArrow() {
@@ -382,6 +400,8 @@ public class GridManipulator {
                     int nextLevelValue = getValueWithKnownKey(nextLevelKey);
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
+                        int doubleNext = nextLevelValue * 2;
+                        gameScore += doubleNext;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
                         System.out.println();
@@ -402,18 +422,20 @@ public class GridManipulator {
     }
     public void newTwoTile(ArrayList zeros){
         int result = 0;
+        if(zeros.size() == 0){
+            this.setGameValid(false);
+        } else {
+            int arrayLength = zeros.size();
+            double tempVar = Math.random();
+            double randVal = arrayLength * tempVar;
+            int randIndex = (int) Math.round(randVal);
+            int arrayAdjusted = randIndex - 1;
+            if(arrayAdjusted == -1){
+                arrayAdjusted =0;
+            }
+            currentBoard.put((Integer) zeros.get(arrayAdjusted), 2);
 
-        int arrayLength = zeros.size();
-        double tempVar = Math.random();
-        double randVal = arrayLength * tempVar;
-        int randIndex = (int) Math.round(randVal);
-        int arrayAdjusted = randIndex - 1;
-        if(arrayAdjusted == -1){
-            arrayAdjusted =0;
         }
-        currentBoard.put((Integer) zeros.get(arrayAdjusted), 2);
-        System.out.println("index changed" + zeros.get(arrayAdjusted));
-
     }
 
     public void setValueWithKnownKey(int key, int value) {
