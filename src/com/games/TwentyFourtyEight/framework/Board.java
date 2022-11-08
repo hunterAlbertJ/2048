@@ -109,7 +109,7 @@ public class Board {
         if(distX > 0){
             current.setX(current.getX() - Tile.SLIDE_SPEED);
         }
-        if(distY < 0){
+        if(distY > 0){
             current.setY(current.getY() - Tile.SLIDE_SPEED);
         }
     }
@@ -173,6 +173,7 @@ public class Board {
             if (checkOutOfBounds(dir, newRow, newCol)) {
                 break;
             }
+
             if (board[newRow][newCol] == null) {
                 board[newRow][newCol] = current;
                 board[newRow - vertDir][newCol - horDir] = null;
