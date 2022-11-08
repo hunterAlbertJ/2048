@@ -20,6 +20,9 @@ public class Game extends JPanel implements KeyListener, Runnable {
     public static final int WIDTH = 400;
     public static final int HEIGHT = 630;
 
+    public static final Font main = new Font("Bebas Neue Regular", Font.PLAIN, 28);
+
+
     private Thread game;
     private boolean running;
 
@@ -35,12 +38,10 @@ public class Game extends JPanel implements KeyListener, Runnable {
     private boolean set;
 
     public Game() {
-        // sets the game window as a focusable component
-        setFocusable(true);
-        // set dimensions of game window
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        // add listener for Key commands
-        addKeyListener(this);
+
+        setFocusable(true);      // sets the game window as a focusable component
+        setPreferredSize(new Dimension(WIDTH, HEIGHT)); // set dimensions of game window
+        addKeyListener(this);  // add listener for Key commands
 
         // create new game board using the game window's dimensions
         board = new Board(WIDTH/2 - Board.BOARD_WIDTH/2, HEIGHT - Board.BOARD_HEIGHT - 10);
@@ -49,6 +50,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
     // this will call to update our Board and listen for KeyPresses eventually
     private void update() {
         board.update();
+        Controller.update();
     }
 
     /*
@@ -70,17 +72,17 @@ public class Game extends JPanel implements KeyListener, Runnable {
     // key listener functions
     @Override
     public void keyTyped(KeyEvent e) {
-
+        // unused
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        Controller.keyPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        Controller.keyReleased(e);
     }
 
     /*
@@ -103,7 +105,7 @@ public class Game extends JPanel implements KeyListener, Runnable {
             then = now;                                // catch up to current system time
 
             // update queue
-            while (unprocessed > 1) {
+            while (unprocessed >= 1) {
                 updates++;
                 update();
                 unprocessed--;                         // unprocessed will decrement until all updates are complete
