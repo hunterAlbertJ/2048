@@ -35,22 +35,21 @@ public class Tile {
 
     // ctor
     public Tile (int value, int x, int y){
+        this.tileImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         setValue(value);
         this.x = x;
         this.y = y;
-        slideTo = new GridPoint(x,y);
-        tileImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        startImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        combineImage = new BufferedImage(WIDTH*2,HEIGHT*2, BufferedImage.TYPE_INT_ARGB);
-        drawImage();
+        this.slideTo = new GridPoint(x,y);
+        this.startImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        this.combineImage = new BufferedImage(WIDTH*2,HEIGHT*2, BufferedImage.TYPE_INT_ARGB);
+        this.drawImage();
     }
 
     /*
      * Draws tile
      */
     private void drawImage(){
-        System.out.println("TileImage: " + tileImage);
-        Graphics2D g = (Graphics2D) tileImage.getGraphics();
+        Graphics2D g = (Graphics2D) this.tileImage.getGraphics();
 
         switch (getValue()) {
             case 2: {
@@ -123,9 +122,9 @@ public class Tile {
         g.setColor(getText());
 
         if(getValue() <= 64){
-            font = Game.main.deriveFont(36f);
+            font = Game.mainFont.deriveFont(36f);
         } else{
-            font = Game.main;
+            font = Game.mainFont;
         }
         g.setFont(font);
 
@@ -190,8 +189,9 @@ public class Tile {
     public void setValue(int value) {
         this.value = value;
 
-        try{drawImage();}
-        catch(Exception e){
+        try{
+            this.drawImage();
+        } catch(Exception e){
             e.printStackTrace();
         }
     }
