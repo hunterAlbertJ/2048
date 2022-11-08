@@ -16,6 +16,7 @@ public class GridManipulatorTestClient {
             if(grid.isGameValid() == false){
                 gameOver = true;
             }
+
             System.out.println("Use WASD keys to move tiles");
             String input = scanner.nextLine().trim().toUpperCase();
             if(input.matches("W|A|S|D")){
