@@ -52,50 +52,61 @@ public class Tile {
         System.out.println("TileImage: " + tileImage);
         Graphics2D g = (Graphics2D) tileImage.getGraphics();
 
-        switch (value) {
+        switch (getValue()) {
             case 2: {
-                background = new Color(0x56FF00);
-                text = new Color(0xC702FF);
+               setBackground(new Color(0x56FF00));
+                setText(new Color(0xC702FF));
+                break;
             }
             case 4: {
-                background = new Color(0xFFC4C4);
-                text = new Color(0x000000);
+                setBackground(new Color(0xFFC4C4));
+                setText(new Color(0x000000));
+                break;
             }
             case 8: {
-                background = new Color(0xFF9F9F);
-                text = new Color(0x000000);
+                setBackground(new Color(0xFF9F9F));
+                setText(new Color(0x000000));
+                break;
             }
             case 16: {
-                background = new Color(0xFF7272);
-                text = new Color(0x000000);
+                setBackground(new Color(0xFF7272));
+                setText(new Color(0x000000));
+                break;
             }
             case 32: {
-                background = new Color(0xFF3232);
-                text = new Color(0x000000);
+                setBackground(new Color(0xFF3232));
+                setText(new Color(0x000000));
+                break;
             }
             case 64: {
-                background = new Color(0xFF0000);
-                text = new Color(0x000000);
+                setBackground(new Color(0xFF0000));
+                setText(new Color(0x000000));
+                break;
             }
             case 128: {
-                background = new Color(0x82B3FF);
-                text = new Color(0x000000);
+                setBackground(new Color(0x82B3FF));
+                setText(new Color(0x000000));
+                break;
             }
             case 256: {
-                background = new Color(0x3482FF);
-                text = new Color(0x000000);
+                setBackground(new Color(0x3482FF));
+                setText(new Color(0x000000));
+                break;
             }
             case 512: {
-                background = new Color(0x0055FF);
-                text = new Color(0x000000);
+                setBackground(new Color(0x0055FF));
+                setText(new Color(0x000000));
+                break;
             }
             case 1024: {
-                background = new Color(0x99FF81);
-                text = new Color(0x000000);
+                setBackground(new Color(0x99FF81));
+                setText(new Color(0x000000));
+                break;
             }
             case 2048: {
-                background = new Color(0x0AFF00);
-                text = new Color(0x000000);
+                setBackground(new Color(0x0AFF00));
+                setText(new Color(0x000000));
+                break;
             }
 //            default:{
 //                background = new Color(0xFF0000);
@@ -106,12 +117,12 @@ public class Tile {
         g.setColor(new Color(0,0,0,0));
         g.fillRect(0,0, WIDTH, HEIGHT);
 
-        g.setColor(background);
+        g.setColor(getBackground());
         g.fillRoundRect(0,0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
 
-        g.setColor(text);
+        g.setColor(getText());
 
-        if(value <= 64){
+        if(getValue() <= 64){
             font = Game.main.deriveFont(36f);
         } else{
             font = Game.main;
@@ -223,5 +234,21 @@ public class Tile {
 
     public void setSlideTo(GridPoint slideTo) {
         this.slideTo = slideTo;
+    }
+
+    public Color getBackground() {
+        return background;
+    }
+
+    public void setBackground(Color background) {
+        this.background = background;
+    }
+
+    public Color getText() {
+        return text;
+    }
+
+    public void setText(Color text) {
+        this.text = text;
     }
 }
