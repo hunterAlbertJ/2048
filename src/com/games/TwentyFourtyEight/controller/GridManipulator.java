@@ -1,5 +1,6 @@
 package com.games.TwentyFourtyEight.controller;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,8 @@ public class GridManipulator {
     public HashMap<Integer, Integer> currentBoard = new HashMap<>();
 
     public void newBoard() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         currentBoard.put(1, 0);
         currentBoard.put(2, 0);
         currentBoard.put(3, 0);
@@ -98,6 +101,8 @@ public class GridManipulator {
     }
 
     public void printBoard() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
         System.out.print("-------------------------");
         System.out.println();
         for (Map.Entry<Integer, Integer> square : currentBoard.entrySet()) {
@@ -131,7 +136,7 @@ public class GridManipulator {
 
             }
         }
-        System.out.println(gameScore + " gameScore");
+        System.out.println("Score: " + gameScore);
         System.out.println();
     }
 
@@ -146,7 +151,6 @@ public class GridManipulator {
                     int nextLevelValue = getValueWithKnownKey(nextLevelKey);
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                        //System.out.println("addition can happen here");
                         gameScore += nextLevelValue * 2;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
@@ -166,12 +170,10 @@ public class GridManipulator {
                     nextLevelValue = getValueWithKnownKey(nextLevelKey);
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                       // System.out.println("addition can happen here with ");
                         gameScore += nextLevelValue * 2;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
                         setValueWithKnownKey(square.getKey(), 0);
                         System.out.println();
-
                         downArrow();
                     }
                     if (nextLevelValue == 0 && square.getValue() != 0) {
@@ -184,7 +186,6 @@ public class GridManipulator {
                     nextLevelKey = square.getKey() + 4;
                     nextLevelValue = getValueWithKnownKey(nextLevelKey);
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                       // System.out.println("addition can happen here");
                         int doubleNext = nextLevelValue * 2;
                         gameScore += doubleNext;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
@@ -213,7 +214,7 @@ public class GridManipulator {
                     int nextLevelValue = getValueWithKnownKey(nextLevelKey);
 
                     if (nextLevelValue == currentLevelValue && nextLevelValue != 0) {
-                        System.out.println("addition can happen here");
+
                         int doubleNext = nextLevelValue * 2;
                         gameScore += doubleNext;
                         setValueWithKnownKey(nextLevelKey, nextLevelValue * 2);
@@ -333,7 +334,6 @@ public class GridManipulator {
             }
         }
         newTwoTile(zeros);
-        System.out.println(zeros);
     }
     public void rightRemoved(){
         rightArrow();
@@ -344,7 +344,7 @@ public class GridManipulator {
             }
         }
         newTwoTile(zeros);
-        System.out.println(zeros);
+
     }
     public void upRemoved(){
         upArrow();
@@ -355,7 +355,7 @@ public class GridManipulator {
             }
         }
         newTwoTile(zeros);
-        System.out.println(zeros);
+
     }
     public void downRemoved(){
        downArrow();
