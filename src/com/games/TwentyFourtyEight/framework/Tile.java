@@ -31,7 +31,7 @@ public class Tile {
     private boolean combineAnim = false;
     private double scaleCombine = 1.2;
     private BufferedImage combineImage;
-    private boolean canCombine;
+    private boolean canCombine = true;
 
     // ctor
     public Tile (int value, int x, int y){
@@ -49,6 +49,7 @@ public class Tile {
      * Draws tile
      */
     private void drawImage(){
+        System.out.println("TileImage: " + tileImage);
         Graphics2D g = (Graphics2D) tileImage.getGraphics();
 
         switch (value) {
@@ -96,10 +97,10 @@ public class Tile {
                 background = new Color(0x0AFF00);
                 text = new Color(0x000000);
             }
-            default:{
-                background = new Color(0xFF0000);
-                text = new Color(0xFFFFFF);
-            }
+//            default:{
+//                background = new Color(0xFF0000);
+//                text = new Color(0xFFFFFF);
+//            }
         }
 
         g.setColor(new Color(0,0,0,0));
@@ -149,7 +150,7 @@ public class Tile {
             g2d.setColor(new Color(0, 0, 0, 0));
             g2d.fillRect(0, 0, WIDTH, HEIGHT);
             g2d.drawImage(tileImage, transform, null);
-            scaleCombine -= 0.1;
+            scaleCombine -= 0.05;
             g2d.dispose();
 
             if (scaleCombine <= 1) {
@@ -159,16 +160,16 @@ public class Tile {
     }
 
     public void render(Graphics2D g){
-//        if(beginAnim){
-//            g.drawImage(startImage, x,y,null);
-//        } else if(combineAnim){
-//            g.drawImage(combineImage,
-//                    (int)(x + WIDTH/2-scaleCombine*WIDTH/2),
-//                    (int)(y + HEIGHT/2-scaleCombine*HEIGHT/2),
-//                    null);
-//        } else {
+        if(beginAnim){
+            g.drawImage(startImage, x,y,null);
+        } else if(combineAnim){
+            g.drawImage(combineImage,
+                    (int)(x + WIDTH/2-scaleCombine*WIDTH/2),
+                    (int)(y + HEIGHT/2-scaleCombine*HEIGHT/2),
+                    null);
+        } else {
             g.drawImage(tileImage, x, y, null);
-//        }
+        }
     }
 
     public int getValue() {
@@ -177,6 +178,27 @@ public class Tile {
 
     public void setValue(int value) {
         this.value = value;
+
+        try{drawImage();}
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public boolean isCombineAnim() {
