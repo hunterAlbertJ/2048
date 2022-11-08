@@ -1,5 +1,7 @@
 package com.games.TwentyFourtyEight.framework;
 
+import com.games.TwentyFourtyEight.controller.Game;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -15,10 +17,11 @@ public class Tile {
     private BufferedImage tileImage;
     private Color background;
     private Color text;
+    private Font font;
     private int x;
     private int y;
 
-    private Point slideTo;
+    private GridPoint slideTo;
 
     // animation properties
     private boolean beginAnim = true;
@@ -30,12 +33,12 @@ public class Tile {
     private BufferedImage combineImage;
     private boolean canCombine = true;
 
-    // ctors
+    // ctor
     public Tile (int value, int x, int y){
         setValue(value);
         this.x = x;
         this.y = y;
-        slideTo = new Point(x,y);
+        slideTo = new GridPoint(x,y);
         tileImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         startImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
         combineImage = new BufferedImage(WIDTH*2,HEIGHT*2, BufferedImage.TYPE_INT_ARGB);
@@ -46,12 +49,13 @@ public class Tile {
      * Draws tile
      */
     private void drawImage(){
+        System.out.println("TileImage: " + tileImage);
         Graphics2D g = (Graphics2D) tileImage.getGraphics();
 
         switch (value) {
             case 2: {
-                background = new Color(0xe9e9e9);
-                text = new Color(0x000000);
+                background = new Color(0x56FF00);
+                text = new Color(0xC702FF);
             }
             case 4: {
                 background = new Color(0xFFC4C4);
@@ -93,10 +97,10 @@ public class Tile {
                 background = new Color(0x0AFF00);
                 text = new Color(0x000000);
             }
-            default:{
-                background = new Color(0x000000);
-                text = new Color(0xFFFFFF);
-            }
+//            default:{
+//                background = new Color(0xFF0000);
+//                text = new Color(0xFFFFFF);
+//            }
         }
 
         g.setColor(new Color(0,0,0,0));
@@ -106,6 +110,19 @@ public class Tile {
         g.fillRoundRect(0,0, WIDTH, HEIGHT, ARC_WIDTH, ARC_HEIGHT);
 
         g.setColor(text);
+
+        if(value <= 64){
+            font = Game.main.deriveFont(36f);
+        } else{
+            font = Game.main;
+        }
+        g.setFont(font);
+
+        int drawX = WIDTH / 2 - DrawUtils.getMessageWidth("" + value, font, g)/2;
+        int drawY = HEIGHT / 2 + DrawUtils.getMessageHeight("" + value,font, g)/2;
+        g.drawString("" + value, drawX, drawY);
+
+        g.dispose();
     }
 
     public void update(){
@@ -133,7 +150,7 @@ public class Tile {
             g2d.setColor(new Color(0, 0, 0, 0));
             g2d.fillRect(0, 0, WIDTH, HEIGHT);
             g2d.drawImage(tileImage, transform, null);
-            scaleCombine -= 0.1;
+            scaleCombine -= 0.05;
             g2d.dispose();
 
             if (scaleCombine <= 1) {
@@ -161,6 +178,27 @@ public class Tile {
 
     public void setValue(int value) {
         this.value = value;
+
+        try{drawImage();}
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public boolean isCombineAnim() {
@@ -169,5 +207,21 @@ public class Tile {
 
     public void setCombineAnim(boolean combineAnim) {
         this.combineAnim = combineAnim;
+    }
+
+    public boolean isCanCombine() {
+        return canCombine;
+    }
+
+    public void setCanCombine(boolean canCombine) {
+        this.canCombine = canCombine;
+    }
+
+    public GridPoint getSlideTo() {
+        return slideTo;
+    }
+
+    public void setSlideTo(GridPoint slideTo) {
+        this.slideTo = slideTo;
     }
 }
