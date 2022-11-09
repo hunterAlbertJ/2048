@@ -40,7 +40,6 @@ public class Game extends JPanel implements KeyListener, Runnable {
     private boolean set;
 
     public Game() {
-
         setFocusable(true);      // sets the game window as a focusable component
         setPreferredSize(new Dimension(WIDTH, HEIGHT)); // set dimensions of game window
         addKeyListener(this);  // add listener for Key commands

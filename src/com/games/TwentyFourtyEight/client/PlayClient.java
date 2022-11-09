@@ -33,7 +33,6 @@ public class PlayClient {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setLayout(new BorderLayout());
-//        window.add(instructions, BorderLayout.PAGE_START);
         window.add(game, BorderLayout.AFTER_LINE_ENDS);
         window.pack();
         window.setLocationRelativeTo(null);
