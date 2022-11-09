@@ -18,10 +18,9 @@ public class Tile {
     private int value;
 
     // reference to Tile graphics
-    private BufferedImage tileImage;
+    private final BufferedImage tileImage;
     private Color background;
     private Color text;
-    private Font font;
 
     // position
     private int x;
@@ -33,11 +32,11 @@ public class Tile {
     // animation properties
     private boolean beginAnim = true;
     private double scaleFirst = 0.1;
-    private BufferedImage startImage;
+    private final BufferedImage startImage;
 
     private boolean combineAnim = false;
     private double scaleCombine = 1.2;
-    private BufferedImage combineImage;
+    private final BufferedImage combineImage;
     private boolean canCombine = true;
 
     // CTOR
@@ -130,6 +129,7 @@ public class Tile {
 
         g.setColor(getText());
 
+        Font font;
         if(getValue() <= 64){
             font = Game.mainFont.deriveFont(36f);
         } else{
@@ -229,10 +229,6 @@ public class Tile {
         this.y = y;
     }
 
-    public boolean isCombineAnim() {
-        return combineAnim;
-    }
-
     public void setCombineAnim(boolean combineAnim) {
         this.combineAnim = combineAnim;
     }
@@ -243,10 +239,6 @@ public class Tile {
 
     public void setCanCombine(boolean canCombine) {
         this.canCombine = canCombine;
-    }
-
-    public GridPoint getSlideTo() {
-        return slideTo;
     }
 
     public void setSlideTo(GridPoint slideTo) {
