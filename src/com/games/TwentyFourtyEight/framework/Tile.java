@@ -7,20 +7,27 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 public class Tile {
+    // Tile dimension, corner roundness, and 'interpolated' speed
     public static final int WIDTH = 80;
     public static final int HEIGHT = 80;
-    public static final int SLIDE_SPEED = 20;
     public static final int ARC_WIDTH = 15;
     public static final int ARC_HEIGHT = 15;
+    public static final int SLIDE_SPEED = 20;
 
+    // value of Tile
     private int value;
+
+    // reference to Tile graphics
     private BufferedImage tileImage;
     private Color background;
     private Color text;
     private Font font;
+
+    // position
     private int x;
     private int y;
 
+    // movement coordinate destination
     private GridPoint slideTo;
 
     // animation properties
@@ -33,24 +40,26 @@ public class Tile {
     private BufferedImage combineImage;
     private boolean canCombine = true;
 
-    // ctor
+    // CTOR
     public Tile (int value, int x, int y){
-        this.tileImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
+        this.tileImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB); // this is a ref to the graphics for this Tile
         setValue(value);
         this.x = x;
         this.y = y;
         this.slideTo = new GridPoint(x,y);
-        this.startImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
-        this.combineImage = new BufferedImage(WIDTH*2,HEIGHT*2, BufferedImage.TYPE_INT_ARGB);
+        this.startImage = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB); // the graphics at the start of the combine animation
+        this.combineImage = new BufferedImage(WIDTH*2,HEIGHT*2, BufferedImage.TYPE_INT_ARGB); // the graphics after combine animation is finished
         this.drawImage();
     }
 
     /*
-     * Draws tile
+     * Draws Tile when its graphics need to be updated.
+     * The value case determines the color/text of the TIle
      */
     private void drawImage(){
         Graphics2D g = (Graphics2D) this.tileImage.getGraphics();
 
+        // find text and background color based off the Tile's value
         switch (getValue()) {
             case 2: {
                setBackground(new Color(0x56FF00));
@@ -107,10 +116,10 @@ public class Tile {
                 setText(new Color(0x000000));
                 break;
             }
-//            default:{
-//                background = new Color(0xFF0000);
-//                text = new Color(0xFFFFFF);
-//            }
+            default:{
+                background = new Color(0xFF0000);
+                text = new Color(0xFFFFFF);
+            }
         }
 
         g.setColor(new Color(0,0,0,0));
@@ -137,11 +146,12 @@ public class Tile {
 
     public void update(){
         if(beginAnim){
+            // beginning animation settings
             AffineTransform transform = new AffineTransform();
             transform.translate(WIDTH/2-scaleFirst*WIDTH/2, HEIGHT/2 - scaleFirst*HEIGHT/2);
             transform.scale(scaleFirst, scaleFirst);
             Graphics2D g2d = (Graphics2D) startImage.getGraphics();
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC); // creates fluid movement without flickering
             g2d.setColor(new Color(0,0,0,0));
             g2d.fillRect(0,0, WIDTH,HEIGHT);
             g2d.drawImage(tileImage, transform, null);
@@ -152,6 +162,7 @@ public class Tile {
                 beginAnim = false;
             }
         } else if(combineAnim) {
+            // combining animation settings
             AffineTransform transform = new AffineTransform();
             transform.translate(WIDTH / 2 - scaleCombine * WIDTH / 2, HEIGHT / 2 - scaleCombine * HEIGHT / 2);
             transform.scale(scaleCombine, scaleCombine);
@@ -169,10 +180,14 @@ public class Tile {
         }
     }
 
+    /*
+     * Renders Tile graphics
+     */
     public void render(Graphics2D g){
         if(beginAnim){
             g.drawImage(startImage, x,y,null);
         } else if(combineAnim){
+            // changes scale of image during animation
             g.drawImage(combineImage,
                     (int)(x + WIDTH/2-scaleCombine*WIDTH/2),
                     (int)(y + HEIGHT/2-scaleCombine*HEIGHT/2),
@@ -181,6 +196,8 @@ public class Tile {
             g.drawImage(tileImage, x, y, null);
         }
     }
+
+    // ACCESSOR METHODS
 
     public int getValue() {
         return value;
@@ -250,5 +267,12 @@ public class Tile {
 
     public void setText(Color text) {
         this.text = text;
+    }
+
+    //TOSTRING()
+
+    @Override
+    public String toString(){
+        return getClass().getSimpleName() + ": value=" + getValue() + ", x=" + getX() + ", y=" + getY();
     }
 }
