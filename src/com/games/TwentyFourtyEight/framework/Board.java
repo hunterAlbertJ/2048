@@ -1,8 +1,10 @@
 package com.games.TwentyFourtyEight.framework;
 
+import com.games.TwentyFourtyEight.client.PlayClient;
 import com.games.TwentyFourtyEight.controller.Controller;
 import com.games.TwentyFourtyEight.controller.Game;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -23,7 +25,7 @@ public class Board {
     // you can create whatever size board you want, as long as it is a square (2x2, 3x3, 4x4, 5x5, etc)
     public static final int ROWS = 4;
     public static final int COLS = 4;
-    public int WIN_VALUE = 4;
+    public int WIN_VALUE = 2048;
 
     // number of random Tiles to start with
     private final int startingTiles = 2;
@@ -33,6 +35,8 @@ public class Board {
 
     private boolean gameOver;
     private boolean winner;
+    private boolean winNotice = false;
+    private boolean loseNotice = false;
 
     // these will hold references to the graphics for the game Board
     private BufferedImage gameBoard;
@@ -145,8 +149,7 @@ public class Board {
 
                     // check for win status
                     if (currentTile.getValue() == WIN_VALUE) {
-                        winner = true;
-                        System.out.println("YOU WIN!!!");
+                        setWinner(true);
 
                         // try to set high score
                         try {
@@ -428,7 +431,14 @@ public class Board {
                     }
                 }
             }
-            gameOver = true;
+            if(loseNotice == false){
+                String loseMessage = new StringBuffer().append("There are no more valid moves.")
+                        .append("\nTry again!").toString();
+
+                JOptionPane.showMessageDialog(null, loseMessage);
+                loseNotice = true;
+                gameOver = true;
+            }
 
             // try to set high score
             try {
@@ -525,4 +535,21 @@ public class Board {
         public int getTileY ( int row){
             return SPACING + row * Tile.HEIGHT + row * SPACING;
         }
+
+    public boolean isWinner() {
+        return winner;
     }
+
+    public void setWinner(boolean winner) {
+        this.winner = winner;
+        if(winNotice == false){
+            String winMessage = new StringBuffer().append("You have reached 2048!")
+                            .append("\nThe game is won, but feel free to max your high score!")
+                            .append("\n\nGo for the ALL TIME BEST!").toString();
+
+            JOptionPane.showMessageDialog(null, winMessage);
+            winNotice = true;
+        }
+
+    }
+}
