@@ -5,9 +5,11 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/*
+ * Handles reading/writing Board.highScore to an outside SaveData file
+ */
 public class Scoring {
-    private static String saveFilePath;
-    private static String dataFilePath = "data/board.dat";
+    private static String dataFilePath = "";
     private static final String fileName = "SaveData";
 
     public Scoring(){};
@@ -15,21 +17,9 @@ public class Scoring {
     public void getFilePath() throws IOException, URISyntaxException, NullPointerException {
         try {
             dataFilePath = Board.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-            createSaveFile();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
-    }
-
-    public void createSaveFile() throws IOException {
-//        if(Files.exists(Path.of(dataFilePath))){
-//            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
-//                System.out.println("InputStream object: " + in.readObject());
-//
-//            }catch (Exception e){
-//                e.printStackTrace();
-//            }
-//        }
     }
 
     public int getHighScore () throws IOException {
@@ -38,11 +28,8 @@ public class Scoring {
             File file = new File(dataFilePath, fileName);
 
             if (!file.isFile()) {
-                createSaveFile();
             } else {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-                //System.out.println("READER: "+ reader.readLine());
-
                 highScore = Integer.parseInt(reader.readLine());
                 reader.close();
             }

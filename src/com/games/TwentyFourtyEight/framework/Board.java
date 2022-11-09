@@ -83,8 +83,6 @@ public class Board {
         start();
     }
 
-
-
         /*
          * Creates the graphics for a new Board
          */
