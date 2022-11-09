@@ -1,7 +1,6 @@
 package com.games.TwentyFourtyEight.controller;
 
 import java.awt.event.KeyEvent;
-import java.util.Scanner;
 
 public class Controller {
     // track which keys are being held and which have been released
@@ -14,7 +13,7 @@ public class Controller {
     /* Updates which keys have been released each frame
      * runs inside Game.update()
      */
-    public static void update(){
+    public void update(){
         for(int i = 0; i < 4; i++){
             switch (i){
                 case 0: {
@@ -33,11 +32,11 @@ public class Controller {
         }
     }
 
-    public static void keyPressed(KeyEvent e){
+    public void keyPressed(KeyEvent e){
         pressed[e.getKeyCode()] = true;
     }
 
-    public static void keyReleased(KeyEvent e){
+    public void keyReleased(KeyEvent e){
         pressed[e.getKeyCode()] = false;
     }
 
@@ -46,7 +45,7 @@ public class Controller {
      * returns true only after user has released key
      * return: boolean
      */
-    public static boolean typed(int keyEvent){
+    public boolean typed(int keyEvent){
         return !pressed[keyEvent] && prev[keyEvent];
     }
 }

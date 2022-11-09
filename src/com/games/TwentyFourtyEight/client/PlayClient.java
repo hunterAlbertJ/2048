@@ -1,13 +1,8 @@
 package com.games.TwentyFourtyEight.client;
 
 import com.games.TwentyFourtyEight.controller.Game;
-import com.games.TwentyFourtyEight.framework.Board;
 
 import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
 import java.awt.*;
 
 /*
@@ -15,8 +10,6 @@ import java.awt.*;
  * Sets info for application window then starts the game.
  */
 public class PlayClient {
-    public boolean winner = false;
-
     public static void main(String[] args) {
         String x = new StringBuffer().append("HOW TO PLAY")
                 .append("\n\nCONTROLS: USING THE FOUR ARROW KEYS, all numbered tiles slide in the direction a player moves them.")

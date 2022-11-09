@@ -23,21 +23,15 @@ public class Game extends JPanel implements KeyListener, Runnable {
 
     public static final Font mainFont = new Font("Comic Sans MS", Font.PLAIN, 28);
 
-    private Controller controller = new Controller();
+    private final Controller controller = new Controller();
 
-    private Thread game;
     private boolean running;
 
     // the image to be rendered
-    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    private final BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
     // reference to our game board
-    private Board board;
-
-    // system time frame data variables
-    private long startTime;
-    private long elapsed;
-    private boolean set;
+    private final Board board;
 
     public Game() {
         setFocusable(true);      // sets the game window as a focusable component
@@ -90,12 +84,10 @@ public class Game extends JPanel implements KeyListener, Runnable {
      */
     @Override
     public void run() {
-        int fps = 0, updates = 0;
-        long fpsTimer = System.currentTimeMillis();     // set fpsTimer to the current time in runtime memory
         double nsPerUpdate = 1_000_000_000.0 / 60;      // finding frames per second
 
         double then = System.nanoTime();                // update time in nanoseconds
-        double unprocessed = 0;
+        double unprocessed = 0;                         // continue to update Game as long as system time passes
 
         // running will remain true until we call Game.stop() or exit the app
         while (running) {
@@ -106,7 +98,6 @@ public class Game extends JPanel implements KeyListener, Runnable {
 
             // update queue
             while (unprocessed >= 1) {
-                updates++;
                 update();
                 unprocessed--;                         // unprocessed will decrement until all updates are complete
                 shouldRender = true;                   // should call the render function
@@ -114,7 +105,6 @@ public class Game extends JPanel implements KeyListener, Runnable {
 
             // rendering the image
             if (shouldRender) {
-                fps++;
                 render();                              // calls render() as all updates are finished
                 shouldRender = false;
 
@@ -126,37 +116,19 @@ public class Game extends JPanel implements KeyListener, Runnable {
                 }
             }
         }
-
-        // Resets FPS Timer
-        if (System.currentTimeMillis() - fpsTimer > 1000) {
-            System.out.println("FPS: " + fps + ", Updates: " + updates);
-
-            fps = 0;
-            updates = 0;
-            fpsTimer += 1000;                                             // fpsTimer is reset to 1000 repeatedly
-        }
     }
 
     /*
      * Starts our Thread
      */
     public synchronized void start(){
+        Thread game;
+
         if(running)                                  // if game is already running, return out early and do nothing
             return;
 
         running = true;
         game = new Thread(this, "game");
         game.start();
-    }
-
-    /*
-     * Stops our Thread
-     */
-    public void stop(){
-        if(!running)                                 // if game is already stopped, return out early and do nothing
-            return;
-
-        running = false;
-        System.exit(0);
     }
 }
