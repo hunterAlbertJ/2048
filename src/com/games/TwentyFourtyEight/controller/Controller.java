@@ -4,11 +4,16 @@ import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
 public class Controller {
-    public static boolean[] pressed = new boolean[256];
-    public static boolean[] prev = new boolean[256];
+    // track which keys are being held and which have been released
+    public static boolean[] pressed = new boolean[41];
+    public static boolean[] prev = new boolean[41];
 
-    private Controller(){ }
+    // CTOR
+    public Controller(){ }
 
+    /* Updates which keys have been released each frame
+     * runs inside Game.update()
+     */
     public static void update(){
         for(int i = 0; i < 4; i++){
             switch (i){
@@ -36,6 +41,11 @@ public class Controller {
         pressed[e.getKeyCode()] = false;
     }
 
+    /*
+     * Prevents the user from holding a direction accidentally
+     * returns true only after user has released key
+     * return: boolean
+     */
     public static boolean typed(int keyEvent){
         return !pressed[keyEvent] && prev[keyEvent];
     }

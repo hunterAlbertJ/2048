@@ -10,18 +10,20 @@ import java.awt.image.BufferedImage;
 
 /*
  * Main game loop class.
- * Manages runtime/update functions.
+ * Manages KeyListener and focusable component.
+ *
  *
  */
 public class Game extends JPanel implements KeyListener, Runnable {
     private static final long serialVersionUID = 1L;
 
     // Dimensions of game window
-    public static final int WIDTH = 400;
+    public static final int WIDTH = 800;
     public static final int HEIGHT = 630;
 
-    public static final Font main = new Font("Bebas Neue Regular", Font.PLAIN, 28);
+    public static final Font mainFont = new Font("Comic Sans MS", Font.PLAIN, 28);
 
+    private Controller controller = new Controller();
 
     private Thread game;
     private boolean running;
@@ -44,13 +46,13 @@ public class Game extends JPanel implements KeyListener, Runnable {
         addKeyListener(this);  // add listener for Key commands
 
         // create new game board using the game window's dimensions
-        board = new Board(WIDTH/2 - Board.BOARD_WIDTH/2, HEIGHT - Board.BOARD_HEIGHT - 10);
+        board = new Board(WIDTH/2 - Board.BOARD_WIDTH/2, HEIGHT - Board.BOARD_HEIGHT );
     }
 
     // this will call to update our Board and listen for KeyPresses eventually
     private void update() {
         board.update();
-        Controller.update();
+        controller.update();
     }
 
     /*
@@ -68,7 +70,6 @@ public class Game extends JPanel implements KeyListener, Runnable {
         g2d.dispose();                                   // dispose of data so it's not sitting in memory
     }
 
-
     // key listener functions
     @Override
     public void keyTyped(KeyEvent e) {
@@ -77,12 +78,12 @@ public class Game extends JPanel implements KeyListener, Runnable {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        Controller.keyPressed(e);
+        controller.keyPressed(e);
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        Controller.keyReleased(e);
+        controller.keyReleased(e);
     }
 
     /*
@@ -113,9 +114,9 @@ public class Game extends JPanel implements KeyListener, Runnable {
             }
 
             // rendering the image
-            if (shouldRender) {                        // calls render() as all updates are finished
+            if (shouldRender) {
                 fps++;
-                render();
+                render();                              // calls render() as all updates are finished
                 shouldRender = false;
 
             } else {                                   // if we should not be rendering...
