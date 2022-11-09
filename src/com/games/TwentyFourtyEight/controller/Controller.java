@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class Controller {
     // track which keys are being held and which have been released
-    public static boolean[] pressed = new boolean[41];
-    public static boolean[] prev = new boolean[41];
+    public static boolean[] pressed = new boolean[256];
+    public static boolean[] prev = new boolean[256];
 
     // CTOR
     public Controller(){ }
