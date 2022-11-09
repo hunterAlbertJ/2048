@@ -23,6 +23,7 @@ public class Board {
     // you can create whatever size board you want, as long as it is a square (2x2, 3x3, 4x4, 5x5, etc)
     public static final int ROWS = 4;
     public static final int COLS = 4;
+    public int WIN_VALUE = 4;
 
     // number of random Tiles to start with
     private final int startingTiles = 2;
@@ -143,8 +144,9 @@ public class Board {
                     resetPosition(currentTile, row, col);
 
                     // check for win status
-                    if (currentTile.getValue() == 2048) {
+                    if (currentTile.getValue() == WIN_VALUE) {
                         winner = true;
+                        System.out.println("YOU WIN!!!");
 
                         // try to set high score
                         try {
