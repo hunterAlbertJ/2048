@@ -11,7 +11,7 @@ import java.awt.*;
  */
 public class PlayClient {
     public static void main(String[] args) {
-        String x = new StringBuffer().append("HOW TO PLAY")
+        String help = new StringBuffer().append("HOW TO PLAY")
                 .append("\n\nCONTROLS: USING THE FOUR ARROW KEYS, all numbered tiles slide in the direction a player moves them.")
                 .append("\n\n\nTiles slide as far as possible in the chosen direction until they are stopped by either another tile or the edge of the grid.")
                 .append("\nEvery turn, a new tile randomly appears in an empty spot on the board with a value of 2.")
@@ -35,6 +35,6 @@ public class PlayClient {
         window.setVisible(true);
 
         game.start();
-        JOptionPane.showMessageDialog(null, x);
+        JOptionPane.showMessageDialog(null, help);
     }
 }

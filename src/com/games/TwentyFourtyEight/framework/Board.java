@@ -61,19 +61,11 @@ public class Board {
         updatedBoard = new BufferedImage(BOARD_WIDTH, BOARD_HEIGHT, BufferedImage.TYPE_INT_RGB);
 
         // begin Board logic here
-        try {
-            scoreMethods.getFilePath();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         createGameBoard();
 
-        try {
-            highScore = scoreMethods.getHighScore();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        highScore = scoreMethods.getHighScore();
+
         start();
     }
 
@@ -95,6 +87,7 @@ public class Board {
                 g.fillRoundRect(x, y, Tile.WIDTH, Tile.HEIGHT, Tile.ARC_WIDTH, Tile.ARC_HEIGHT);
             }
         }
+        scoreMethods.getHighScore();
     }
 
     /*
@@ -144,11 +137,9 @@ public class Board {
                     setWinner();
 
                     // try to set high score
-                    try {
-                        scoreMethods.setHighScore(currentScore, highScore);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
+                    scoreMethods.setHighScore(currentScore, highScore);
+
                 }
             }
         }
@@ -430,14 +421,12 @@ public class Board {
             JOptionPane.showMessageDialog(null, loseMessage);
             loseNotice = true;
         }
-        System.exit(0);
-
         // try to set high score
-        try {
-            scoreMethods.setHighScore(currentScore, highScore);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        scoreMethods.setHighScore(currentScore, highScore);
+
+
+        System.exit(0);
     }
 
     /*

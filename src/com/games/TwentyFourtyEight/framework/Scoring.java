@@ -2,57 +2,45 @@ package com.games.TwentyFourtyEight.framework;
 
 import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /*
  * Handles reading/writing Board.highScore to an outside SaveData file
  */
-public class Scoring {
-    private static String dataFilePath = "";
-    private static final String fileName = "SaveData";
+public class Scoring implements Serializable{
 
+    private static final String dataFilePath = "data/score.dat";
+
+    // CTOR
     public Scoring(){}
 
-    public void getFilePath() throws URISyntaxException, NullPointerException {
-        try {
-            dataFilePath = Board.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public int getHighScore () throws IOException {
+    public int getHighScore () {
         int highScore = 0;
-        try {
-            File file = new File(dataFilePath, fileName);
 
-            if (!file.isFile()) {
-                throw new NullPointerException("No SaveData found!");
-            } else {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-                highScore = Integer.parseInt(reader.readLine());
-                reader.close();
+        if(Files.exists(Path.of(dataFilePath))){
+            try(DataInputStream in = new DataInputStream(new FileInputStream(dataFilePath))){
+                highScore = in.readInt();
+            }catch(IOException e){
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
         return highScore;
     }
 
-    public void setHighScore (int currentScore, int highScore) throws IOException {
-        FileWriter output;
+    public void save(int value) {
+        try(DataOutputStream out = new DataOutputStream(new FileOutputStream(dataFilePath))){
+            out.writeInt(value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setHighScore (int currentScore, int highScore) {
         if (currentScore > highScore) {
             highScore = currentScore;
         }
 
-        try {
-            File file = new File(dataFilePath, fileName);
-            output = new FileWriter(file);
-            BufferedWriter writer = new BufferedWriter(output);
-            writer.write("" + highScore);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        save(highScore);
     }
 }
